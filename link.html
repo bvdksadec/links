@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LIÊN KẾT HỆ THỐNG</title>
+
+  <!-- Icons -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    :root{
+      --primary:#0e5bce;
+      --primary2:#4facfe;
+      --text:#0f172a;
+      --muted:#64748b;
+      --card:rgba(255,255,255,.74);
+      --border:rgba(255,255,255,.65);
+      --shadow:0 18px 60px rgba(2,8,23,.16);
+      --shadowHover:0 26px 80px rgba(2,8,23,.22);
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 15% 15%, rgba(14,91,206,.22), transparent 60%),
+        radial-gradient(900px 600px at 85% 25%, rgba(79,172,254,.22), transparent 55%),
+        radial-gradient(1000px 700px at 55% 95%, rgba(34,197,94,.12), transparent 55%),
+        linear-gradient(135deg, #eef2ff, #f8fafc 40%, #eef2f7);
+      display:flex;
+      justify-content:center;
+      padding:26px;
+    }
+
+    .wrap{
+      width:min(1180px, 100%);
+    }
+
+    /* ===== Header ===== */
+    .top{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:18px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .logo{
+      width:46px;height:46px;
+      border-radius:16px;
+      background:linear-gradient(135deg, rgba(14,91,206,.98), rgba(79,172,254,.98));
+      box-shadow:0 14px 34px rgba(14,91,206,.25);
+      display:grid;
+      place-items:center;
+      color:#fff;
+      font-size:18px;
+      flex:0 0 auto;
+    }
+
+    h1{
+      margin:0;
+      font-size:22px;
+      letter-spacing:.2px;
+    }
+
+    .subtitle{
+      margin:5px 0 0;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .meta{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .pill{
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.62);
+      border:1px solid rgba(255,255,255,.75);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+      font-size:12px;
+      color:#334155;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      box-shadow: 0 10px 25px rgba(2,8,23,.06);
+    }
+
+    /* ===== Grid ===== */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:16px;
+    }
+
+    @media (max-width: 980px){
+      .grid{ grid-template-columns:repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px){
+      .top{ flex-direction:column; align-items:flex-start; }
+      .meta{ justify-content:flex-start; }
+      .grid{ grid-template-columns:1fr; }
+    }
+
+    /* ===== Card ===== */
+    .card{
+      position:relative;
+      padding:18px 18px 16px;
+      border-radius:20px;
+      background:var(--card);
+      border:1px solid var(--border);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      min-height:128px;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+
+    .card::after{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(320px 160px at 12% 0%, rgba(14,91,206,.18), transparent 60%),
+        radial-gradient(300px 170px at 92% 25%, rgba(79,172,254,.14), transparent 55%);
+      pointer-events:none;
+    }
+
+    .card:hover{
+      transform:translateY(-4px);
+      box-shadow:var(--shadowHover);
+    }
+
+    .row{
+      position:relative;
+      z-index:1;
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .ic{
+      width:48px;height:48px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      color:#fff;
+      background:linear-gradient(135deg, var(--primary), var(--primary2));
+      box-shadow:0 14px 30px rgba(14,91,206,.22);
+      flex:0 0 auto;
+      font-size:18px;
+    }
+
+    .name{
+      margin:0;
+      font-size:16px;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+
+    .desc{
+      margin:5px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.35;
+    }
+
+    .open{
+      margin-left:auto;
+      width:40px;height:40px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,.7);
+      border:1px solid rgba(255,255,255,.8);
+      color:#1e293b;
+      transition: all .18s ease;
+      flex:0 0 auto;
+    }
+
+    .card:hover .open{
+      background:var(--primary);
+      color:#fff;
+      border-color: rgba(14,91,206,.35);
+      transform: translateY(-1px);
+    }
+
+    /* whole card clickable */
+    .card a{
+      position:absolute;
+      inset:0;
+      z-index:2;
+      text-indent:-9999px;
+    }
+
+    /* Footer */
+    .foot{
+      margin-top:16px;
+      text-align:center;
+      font-size:12px;
+      color:rgba(51,65,85,.75);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <div class="top">
+      <div class="brand">
+        <div class="logo"><i class="fa-solid fa-link"></i></div>
+        <div>
+          <h1>LIÊN KẾT HỆ THỐNG</h1>
+          <div class="subtitle">Mở nhanh các hệ thống • Click là mở tab mới</div>
+        </div>
+      </div>
+
+      <div class="meta">
+        <div class="pill"><i class="fa-solid fa-bolt"></i> Truy cập nhanh</div>
+        <div class="pill"><i class="fa-solid fa-circle-info"></i> Dashboard Links</div>
+      </div>
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        <div class="row">
+          <div class="ic"><i class="fa-solid fa-file-arrow-down"></i></div>
+          <div>
+            <p class="name">Tải Report</p>
+            <p class="desc">Tải mẫu jasper/xml template</p>
+          </div>
+          <div class="open"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        </div>
+        <a href="https://bvdongthap.vncare.vn/vnpthis/main/manager.jsp?func=../danhmuc/UTILS_UPL_TLEE"
+           target="_blank" rel="noopener">Open</a>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div class="ic"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+          <div>
+            <p class="name">TOOL CHECK FUNC</p>
+            <p class="desc">Check function, procedure,...</p>
+          </div>
+          <div class="open"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        </div>
+        <a href="https://bvdongthap.vncare.vn/vnpthis/main/manager.jsp?func=../danhmuc/TOOL_CHECK_FUNC"
+           target="_blank" rel="noopener">Open</a>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div class="ic"><i class="fa-solid fa-upload"></i></div>
+          <div>
+            <p class="name">Upload Report</p>
+            <p class="desc">Upload report (phải cấu hình file host)</p>
+          </div>
+          <div class="open"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        </div>
+        <a href="https://bvdakhoa.vncare.vn/vnpthis/login/login.jsp"
+           target="_blank" rel="noopener">Open</a>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div class="ic"><i class="fa-solid fa-pen-ruler"></i></div>
+          <div>
+            <p class="name">Dreport - mẫu ký số</p>
+            <p class="desc">Thiết kế mẫu ký số</p>
+          </div>
+          <div class="open"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        </div>
+        <a href="https://onehealth2.vncare.vn/app/dreport/login"
+           target="_blank" rel="noopener">Open</a>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div class="ic"><i class="fa-solid fa-tablet-screen-button"></i></div>
+          <div>
+            <p class="name">Form Động</p>
+            <p class="desc">Thiết kế form động</p>
+          </div>
+          <div class="open"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        </div>
+        <a href="https://bvdongthap.vncare.vn/vnpthis/main/manager.jsp?func=../danhmuc/FORM_NHAP"
+           target="_blank" rel="noopener">Open</a>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div class="ic"><i class="fa-solid fa-sliders"></i></div>
+          <div>
+            <p class="name">Tham số VNPT HIS</p>
+            <p class="desc">Tham số và ghi chú tài liệu</p>
+          </div>
+          <div class="open"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        </div>
+        <a href="https://docs.google.com/spreadsheets/d/1EMnOH82YYAqEvohcaX20ZY61kO8PCJyJUeDQ6mm7T4E/edit?usp=sharing"
+           target="_blank" rel="noopener">Open</a>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div class="ic"><i class="fa-solid fa-hospital"></i></div>
+          <div>
+            <p class="name">VNPT HIS</p>
+            <p class="desc">Hệ thống thông tin quản lý bệnh viện</p>
+          </div>
+          <div class="open"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        </div>
+        <a href="https://bvdongthap.vncare.vn/vnpthis/login/login.jsp"
+           target="_blank" rel="noopener">Open</a>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div class="ic"><i class="fa-solid fa-flask-vial"></i></div>
+          <div>
+            <p class="name">VNPT LIS</p>
+            <p class="desc">Hệ thống quản lý thông tin xét nghiệm</p>
+          </div>
+          <div class="open"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        </div>
+        <a href="https://vnlis.vn/#/"
+           target="_blank" rel="noopener">Open</a>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div class="ic"><i class="fa-solid fa-x-ray"></i></div>
+          <div>
+            <p class="name">VNPT RIS/PACS</p>
+            <p class="desc">Quản lý chẩn đoán hình ảnh</p>
+          </div>
+          <div class="open"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        </div>
+        <a href="https://cdha-sadecdtp.vnpthis.vn/login"
+           target="_blank" rel="noopener">Open</a>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div class="ic"><i class="fa-solid fa-chart-simple"></i></div>
+          <div>
+            <p class="name">Zabbix</p>
+            <p class="desc">Giám sát mạng</p>
+          </div>
+          <div class="open"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        </div>
+        <!-- ✅ FIX: đóng dấu " cho href -->
+        <a href="http://172.16.103.10/zabbix/zabbix.php?action=dashboard.view&dashboardid=1"
+           target="_blank" rel="noopener">Open</a>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div class="ic"><i class="fa-solid fa-list"></i></div>
+          <div>
+            <p class="name">Danh sách IP</p>
+            <p class="desc">Danh sách IP nội bộ</p>
+          </div>
+          <div class="open"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        </div>
+        <a href="https://docs.google.com/spreadsheets/d/1er1l5Zi_N92YfxMkGzXaj1b0T0pj2zYf/edit?gid=1067567875#gid=1067567875"
+           target="_blank" rel="noopener">Open</a>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div class="ic"><i class="fa-solid fa-calendar-days"></i></div>
+          <div>
+            <p class="name">Ngày bù</p>
+            <p class="desc">Lịch trực / ngày nghỉ bù</p>
+          </div>
+          <div class="open"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        </div>
+        <a href="https://docs.google.com/spreadsheets/d/1jdkX10eM-U4Dc0pukzkDo04xKuMIEBxQ/edit?gid=920194923#gid=920194923"
+           target="_blank" rel="noopener">Open</a>
+      </div>
+
+    </div>
+
+    <div class="foot">© QUỐC IT • BVĐK SA ĐÉC</div>
+  </div>
+</body>
+</html>
